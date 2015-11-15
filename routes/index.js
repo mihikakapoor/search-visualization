@@ -8,7 +8,7 @@ nconf.env().file({ file: 'config.json'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Princeton' });
+	res.render('index', { title: '#realtime' });
 
 });
 
@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
 	var ht = '#' + req.body.hashtag;
 
 	/* REST API - Search for past Tweets */
-	T.get('search/tweets', { q: ht, count: 30}, function(err, data, response) {
+	T.get('search/tweets', { q: ht, count: 200}, function(err, data, response) {
 	  var hashtagCounts = [];
 	  var newhashtagcounts = new Array();
 
@@ -79,8 +79,8 @@ router.post('/', function(req, res, next) {
 	})
 });
 
-router.get('/login', function(req, res, next) {
+/*router.get('/login', function(req, res, next) {
   res.render('index', { title: 'Express' });
-});
+});*/
 
 module.exports = router;
