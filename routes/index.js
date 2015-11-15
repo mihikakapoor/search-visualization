@@ -45,19 +45,6 @@ router.post('/', function(req, res, next) {
 		    		vcount++;
 		    		hashtagCounts[lowercase] = ({name: lowercase, size: vcount});
 		    	}
-
-		    	/*
-		    	var htprelower = data.statuses[x].entities.hashtags[y].text;
-		    	var ht = htprelower.toLowerCase();
-		    	if (typeof hashtagarray[ht] == 'undefined')
-		    		hashtagarray[ht] = 1;
-		    	else 
-		    		hashtagarray[ht]++;
-		    	
-		    	hashtags.push(ht);*/
-		    	/*console.log(data.statuses[x].text);*/
-		    	/*console.log(lowercase);*/
-		    	/*console.log(hashtagarray[ht]);*/
 		    }
 	    }
 
