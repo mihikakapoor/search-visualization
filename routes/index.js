@@ -8,7 +8,7 @@ nconf.env().file({ file: 'config.json'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Princeton' });
+	res.render('index', { title: '#realtime' });
 
 });
 
@@ -92,8 +92,8 @@ router.post('/', function(req, res, next) {
 	})
 });
 
-router.get('/login', function(req, res, next) {
+/*router.get('/login', function(req, res, next) {
   res.render('index', { title: 'Express' });
-});
+});*/
 
 module.exports = router;
