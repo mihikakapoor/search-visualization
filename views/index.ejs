@@ -42,7 +42,7 @@
     .attr("height", diameter)
     .attr("class", "bubble");
 
-    d3.json("http://localhost:3000/flare3.json", function(error, root) {
+    d3.json("http://localhost:3000/flare2.json", function(error, root) {
       if (error) throw error;
 
       var node = svg.selectAll(".node")

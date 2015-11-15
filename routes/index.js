@@ -82,7 +82,9 @@ router.post('/', function(req, res, next) {
 
 	  	var file = './public/flare2.json';
 
-	  	jsonfile.writeFile(file, new_array, function(err) {
+	  	var obj = { "name": "flare", "children": new_array }
+
+	  	jsonfile.writeFile(file, obj, function(err) {
 	  		console.error(err);
 	  	});
 
