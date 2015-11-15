@@ -22,46 +22,70 @@ router.post('/', function(req, res, next) {
 	    access_token_secret:  nconf.get('access_token_secret')
 	});
 
+	var ht = '#' + req.body.hashtag;
+
 	/* REST API - Search for past Tweets */
-	T.get('search/tweets', { q: req.body.hashtag, count: 30}, function(err, data, response) {
-	  var hashtagCounts = new Array();
+	T.get('search/tweets', { q: ht, count: 30}, function(err, data, response) {
+	  var hashtagCounts = [];
+	  var newhashtagcounts = new Array();
 
-	  for (x in data.statuses) {
-	    /*console.log(data.statuses[x].text);*/
-	    for (y in data.statuses[x].entities.hashtags) {
+	    for (x in data.statuses) {
+		    /*console.log(data.statuses[x].text);*/
+		    for (y in data.statuses[x].entities.hashtags) {
 
-	    	var htprelower = data.statuses[x].entities.hashtags[y].text;
-	    	var lowercase = htprelower.toLowerCase();
-	    	
+		    	var htprelower = data.statuses[x].entities.hashtags[y].text;
+		    	var lowercase = htprelower.toLowerCase();
+		    	
 
-	    	hashtagCounts.push({hashtag: lowercase, count: 1});
+		    	/*hashtagCounts.push({hashtag: lowercase, count: 1});*/
+		    	if (typeof hashtagCounts[lowercase] == 'undefined')
+		    		hashtagCounts[lowercase] = ({name: lowercase, size: 1});
+		    	else {
+		    		var vcount = hashtagCounts[lowercase].size;
+		    		vcount++;
+		    		hashtagCounts[lowercase] = ({name: lowercase, size: vcount});
+		    	}
 
-	    	/*
-	    	var htprelower = data.statuses[x].entities.hashtags[y].text;
-	    	var ht = htprelower.toLowerCase();
-	    	if (typeof hashtagarray[ht] == 'undefined')
-	    		hashtagarray[ht] = 1;
-	    	else 
-	    		hashtagarray[ht]++;
-	    	
-	    	hashtags.push(ht);*/
-	    	/*console.log(data.statuses[x].text);*/
-	    	/*console.log(ht);*/
-	    	/*console.log(hashtagarray[ht]);*/
+		    	/*
+		    	var htprelower = data.statuses[x].entities.hashtags[y].text;
+		    	var ht = htprelower.toLowerCase();
+		    	if (typeof hashtagarray[ht] == 'undefined')
+		    		hashtagarray[ht] = 1;
+		    	else 
+		    		hashtagarray[ht]++;
+		    	
+		    	hashtags.push(ht);*/
+		    	/*console.log(data.statuses[x].text);*/
+		    	/*console.log(lowercase);*/
+		    	/*console.log(hashtagarray[ht]);*/
+		    }
 	    }
-	  }
 
-	  function compare(a, b)
-	  {
-	  	 if (a.count > b.count)
-	  	 	return -1;
-	  	 if (a.count < b.count)
-	  	 	return 1;
-	  	 return 0;
-	  }
+	    function compare(a, b)
+	    {
+		  	if (a.size > b.size)
+		  	 	return -1;
+		  	if (a.size < b.size)
+		  	 	return 1;
+		  	return 0;
+	    }
 
-	  var new_array = hashtagCounts.sort(compare);
-	  console.log(new_array);
+	    for (x in hashtagCounts) {
+	  		newhashtagcounts.push(hashtagCounts[x]);
+	  	}
+
+	    var new_array = newhashtagcounts.sort(compare);
+	  	console.log(new_array);
+
+	  	/*write to jsonfile*/
+	  	var jsonfile = require('jsonfile');
+
+	  	var file = './public/flare2.json';
+
+	  	jsonfile.writeFile(file, new_array, function(err) {
+	  		console.error(err);
+	  	});
+
 	  res.render('index', { title: 'Express', hashtags: new_array, search: req.body.hashtag});
 	})
 });
