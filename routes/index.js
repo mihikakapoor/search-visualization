@@ -88,12 +88,8 @@ router.post('/', function(req, res, next) {
 	  		console.error(err);
 	  	});
 
-	  res.render('index', { title: 'Express', hashtags: new_array, search: req.body.hashtag});
+	  res.render('index', { title: '#realtime', hashtags: new_array, search: req.body.hashtag});
 	})
 });
-
-/*router.get('/login', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});*/
 
 module.exports = router;
