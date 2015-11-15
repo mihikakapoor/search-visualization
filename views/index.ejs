@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:xlink="http://www.w3.org/1999/xlink">
 <head>
-	<meta charset="utf-8">
-
-	<title><%= title %></title>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<style>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <style>
 
 	text {
 		font: 10px sans-serif;
@@ -15,25 +15,35 @@
 	<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	<img src="../images/logo.png" alt="#realtime" style="width:350px;height:66px;">
 
-	<form method="post" action="/">
-		<input type="text" name="hashtag">
-		<input type="submit">
-	</form>
-	<% if (typeof hashtags != 'undefined') { %>
+	<div style = "padding: 30px 400px 0px 63px;">
+   
+	   <form class = "bs-example bs-example-form" role = "form" method="post" action="/">
+	      <div class = "input-group">
+	         <span class = "input-group-addon">#</span>
+	         <input type = "text" class = "form-control" placeholder = "hashtag" name="hashtag">
+	      </div>
+	   </form>
+	</div>
+
+       
+    <% if (typeof hashtags != 'undefined') { %>
+
 
 	<h1>#<%= search %></h1>
-	<div id="viz"></div>
 	<script>
+
 
 	var diameter = 960,
 	format = d3.format(",d"),
 	color = d3.scale.category20c();
 
-	var bubble = d3.layout.pack()
-	.sort(null)
-	.size([diameter, diameter])
-	.padding(1.5);
+    var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(10);
 
 	var svg = d3.select("body").append("svg")
 	.attr("width", diameter)
