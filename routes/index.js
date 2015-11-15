@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
 	var ht = '#' + req.body.hashtag;
 
 	/* REST API - Search for past Tweets */
-	T.get('search/tweets', { q: ht, count: 30}, function(err, data, response) {
+	T.get('search/tweets', { q: ht, count: 200}, function(err, data, response) {
 	  var hashtagCounts = [];
 	  var newhashtagcounts = new Array();
 
