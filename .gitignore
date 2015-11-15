@@ -1,0 +1,18 @@
+# No need to commit modules
+node_modules
+
+# Private/working directory
+private/
+
+#DS_Store files
+.DS_Store
+
+#Project files
+.project
+
+# Logs
+logs
+*.log
+
+# config file
+config.js
