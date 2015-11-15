@@ -1,26 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var Twit = require('twit');
+var nconf = require('nconf');
+
+nconf.env().file({ file: 'config.json'});
 
 
 /* GET home page. */
+router.get('/', function(req, res, next) {
+	res.render('index', { title: 'Princeton' });
+
+});
 
 /* POST home page. */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res, next) {
 
 	var T = new Twit({
-	    consumer_key:         'E8TSSuSOVnSXvPmEeiYEcwIw8', 
-	    consumer_secret:      'm7MgjwnAQfM6PUUxOtGzkutCceW38SUhc761LAZXZByHBKIHQh', 
-	    access_token:         '243421898-ouJrkkZyouwQ2uZpvmHPdQuzXM5MWKTq57BirkLd', 
-	    access_token_secret:  'SExsA6bXbDJKfTsWa47PDGUppZtElN82PdMkrMNJ67ksH'
+	    consumer_key:         nconf.get('consumer_key'), 
+	    consumer_secret:      nconf.get('consumer_secret'), 
+	    access_token:         nconf.get('access_token'), 
+	    access_token_secret:  nconf.get('access_token_secret')
 	});
 
-	var hi = '#republican'
-
-	/*var ht = */
-
 	/* REST API - Search for past Tweets */
-	T.get('search/tweets', { q: hi, count: 100 }, function(err, data, response) {
+	T.get('search/tweets', { q: req.body.hashtag, count: 100 }, function(err, data, response) {
 	  var hashtags = new Array();
 	  var hashtagarray = [];
 	  for (x in data.statuses) {
@@ -40,7 +43,7 @@ router.get('/', function(req, res, next) {
 	    }
 	  }
 	  console.log(hashtagarray);
-	  res.render('index', { title: 'Express', hashtags: hashtags});
+	  res.render('index', { title: 'Express', hashtags: hashtags, search: req.body.hashtag});
 	})
 });
 

@@ -15,4 +15,4 @@ logs
 *.log
 
 # config file
-config.js
+config.json
